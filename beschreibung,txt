@@ -1,6 +1,6 @@
 Diese Waldsensor-App kann auf einem Android-Gerät installiert werden. Wenn die ESP-Mikrokontroller mit dem
 auszuführenden Code für die Höhenerkennung im Wald aktiv sind, zeigt diese App in Echtzeit die Änderungen
-des Zustands der gemessenen Waldfläche.
+des Zustands der gemessenen Waldfläche an.
 
 Die Daten werden vom API Endpunkt "https://getpantry.cloud/apiv1/pantry/1eea40ce-2ec9-4593-a2e6-5ad1a0484f31/basket/"
 abgerufen.
