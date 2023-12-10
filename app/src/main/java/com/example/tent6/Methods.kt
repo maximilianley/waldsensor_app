@@ -9,6 +9,10 @@ import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+
 class Methods {
     companion object{
 
@@ -82,6 +86,16 @@ class Methods {
 
         fun createJSONMessage(key: String, value: String):String{
             return "{\"$key\": \"$value\"}"
+        }
+
+        fun getCurrentDateTimeFormatted(): String {
+            val dateFormat = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+
+            val currentDate = dateFormat.format(Date())
+            val currentTime = timeFormat.format(Date())
+
+            return "vom $currentDate um $currentTime Uhr"
         }
 
     }

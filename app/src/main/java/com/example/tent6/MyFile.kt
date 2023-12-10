@@ -50,7 +50,7 @@ class MyFile(filename:String, context:Context, create:Boolean = true,
             openFile()
             BufferedReader(FileReader(file)).use { reader ->
                 var currentLineIndex = 0
-                while (currentLineIndex < index) {
+                while (currentLineIndex <= index) {
                     line = reader.readLine()
                     if (line == null)
                         break // Reached the end of the file before reaching the desired index
