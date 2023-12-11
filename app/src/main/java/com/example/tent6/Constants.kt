@@ -14,6 +14,7 @@ class Constants {
 
         const val messageKey = "nachricht" //""noMessage"
         const val maxGetAttempts = 7 // eine Woche
+        var attemptsOverflow = false
 
         const val newlineCode = "NEWLINE"
     }

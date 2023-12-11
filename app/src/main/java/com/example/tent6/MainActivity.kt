@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity() {
             val current_count = offline_counts_file.readLine(0).toInt()
             if (current_count >= Constants.maxGetAttempts){
                 exclamationButton.alpha = 1.0f
+                Constants.attemptsOverflow = true
             }
         }catch (e: Exception){
             println("Exception during operations on offline_counts_file on startup:")
@@ -108,6 +109,7 @@ class MainActivity : AppCompatActivity() {
                             offline_counts_file.clearFile()
                             offline_counts_file.appendLine(0.toString())
                             exclamationButton.alpha = 0.0f
+                            Constants.attemptsOverflow = false
 
                         }catch (e: Exception){
                             println("Exception during state update:")
@@ -118,6 +120,7 @@ class MainActivity : AppCompatActivity() {
                                 offline_counts_file.appendLine((current_count+1).toString())
                                 if (current_count+1 >= Constants.maxGetAttempts){
                                     exclamationButton.alpha = 1.0f
+                                    Constants.attemptsOverflow = true
                                 }
                             }catch (e: Exception){
                                 println("Exception during operations on offline_counts_file:")
@@ -138,12 +141,27 @@ class MainActivity : AppCompatActivity() {
         redCircleImageView.alpha = 0.0f
 
         exclamationButton.setOnTouchListener { view, motionEvent ->
-            if (motionEvent.action == MotionEvent.ACTION_UP) {
-                redCircleImageView.alpha = 0.0f
-            } else if (motionEvent.action == MotionEvent.ACTION_DOWN) {
-                redCircleImageView.alpha = 1.0f
+            if (Constants.attemptsOverflow) {
+                if (motionEvent.action == MotionEvent.ACTION_UP) {
+                    redCircleImageView.alpha = 0.0f
+                } else if (motionEvent.action == MotionEvent.ACTION_DOWN) {
+                    redCircleImageView.alpha = 1.0f
+                }
             }
             false
+        }
+
+        exclamationButton.setOnClickListener {
+            if (Constants.attemptsOverflow) {
+                PopUpWindow(
+                    this,
+                    "Sensor offline",
+                    "Es wurde seit mind. ${Constants.maxGetAttempts} Tagen " +
+                            "keine Nachrincht erhalten. Entweder \n- ihr Gerät war nicht am Internet verbunden\n- die Messstation ist offline, " +
+                            "oder\n- es gibt ein Problem in der Kommunikation mit dem API-Server\n\nBitte sicherstellen, dass diese Punkte " +
+                            "berücksichtigt wurden."
+                )
+            }
         }
 
     }
